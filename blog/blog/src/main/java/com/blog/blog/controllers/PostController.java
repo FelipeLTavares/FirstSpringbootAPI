@@ -1,10 +1,10 @@
-package com.blog.blog.controllers.User;
+package com.blog.blog.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blog.blog.dtos.User.CreateUSerDto;
-import com.blog.blog.entities.User;
-import com.blog.blog.services.UserService;
+import com.blog.blog.dtos.Post.CreatePostDto;
+import com.blog.blog.entities.Post;
+import com.blog.blog.services.PostService;
 
 import jakarta.validation.Valid;
 
@@ -21,32 +21,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/post")
 @Validated
-public class UserController {
+public class PostController {
 
     @Autowired
-    UserService userService;
+    PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> allUsers = userService.findAll();
+    public ResponseEntity<List<Post>> findAll() {
+        List<Post> allPosts = postService.findAll();
 
-        return ResponseEntity.ok(allUsers);
+        return ResponseEntity.ok(allPosts);
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody CreateUSerDto requestData) {
-        User user = new User(requestData);
+    public ResponseEntity<Post> create(@Valid @RequestBody CreatePostDto requestData) {
+        Post post = new Post(requestData);
 
-        User createdUser = userService.create(user);
+        Post createdPost = postService.create(post);
 
-        return ResponseEntity.ok(createdUser);
+        return ResponseEntity.ok(createdPost);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        userService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        postService.delete(id);
 
         return ResponseEntity.ok("Apagado!");
     }

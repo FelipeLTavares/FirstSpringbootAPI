@@ -9,7 +9,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class BlogApplication {
 
 	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.configure().load();
+		Dotenv.configure().load();
 		
 		SpringApplication.run(BlogApplication.class, args);
 	}
