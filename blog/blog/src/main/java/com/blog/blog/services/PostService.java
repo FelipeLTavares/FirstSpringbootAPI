@@ -19,8 +19,8 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
-    public Optional<Post> findById(Long id) {
-        return postRepository.findById(id);
+    public Post findById(Long id) {
+        return postRepository.getReferenceById(id);
     }
 
     public Page<Post> findAll(Optional<String> title, Pageable pageable) {
