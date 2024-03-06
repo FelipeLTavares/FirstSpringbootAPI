@@ -3,7 +3,6 @@ package com.blog.blog.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.blog.dtos.User.CreateUSerDto;
-import com.blog.blog.dtos.User.ListOnlyUserDataDto;
 import com.blog.blog.entities.User;
 import com.blog.blog.services.UserService;
 
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/user")
@@ -31,17 +31,17 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<ListOnlyUserDataDto>> findAll() {
-        List<ListOnlyUserDataDto> allUsers = userService.getUsersList();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> allUsers = userService.findAll();
 
         return ResponseEntity.ok(allUsers);
     }
 
-    @GetMapping("/posts/{id}")
-    public ResponseEntity<Optional<User>> findUserAndPosts(@PathVariable Long id) {
-        Optional<User> allUsers = userService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<User>> findById(@PathVariable Long id) {
+        Optional<User> user = userService.findById(id);
 
-        return ResponseEntity.ok(allUsers);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping

@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.blog.blog.dtos.User.ListOnlyUserDataDto;
 import com.blog.blog.entities.User;
 import com.blog.blog.repositories.UserRepository;
 
@@ -28,12 +27,8 @@ public class UserService {
         return user;
     }
 
-    public List<ListOnlyUserDataDto> getUsersList () {
-        return userRepository.findAll().stream().map(ListOnlyUserDataDto::new).toList();
-    }
-
-    public User create(User userData) {
-        User createdUser = userRepository.save(userData);
+    public User create(User user) {
+        User createdUser = userRepository.save(user);
 
         return createdUser;
     }
