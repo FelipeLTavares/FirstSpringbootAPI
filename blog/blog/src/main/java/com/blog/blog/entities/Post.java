@@ -5,6 +5,7 @@ import com.blog.blog.dtos.Post.CreatePostDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,12 +29,14 @@ public class Post {
 
     private String title;
     private String body;
-    private Integer user_id;
+
+    @JoinColumn(name = "userId")
+    private Integer userId;
 
     public Post(CreatePostDto postData) {
         this.title = postData.title();
         this.body = postData.body();
-        this.user_id = Integer.parseInt(postData.user_id());
+        this.userId = Integer.parseInt(postData.userId());
     }
 
 }

@@ -32,10 +32,6 @@ public class User {
 
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<Post> posts;
-
     public User(CreateUSerDto userData) {
         this.name = userData.name();
     }
