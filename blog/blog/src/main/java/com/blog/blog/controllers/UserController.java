@@ -3,9 +3,12 @@ package com.blog.blog.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.blog.dtos.User.CreateUSerDto;
+import com.blog.blog.dtos.User.UpdateUserDto;
+import com.blog.blog.dtos.User.UpdatedUserDto;
 import com.blog.blog.entities.User;
 import com.blog.blog.services.UserService;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/user")
@@ -51,6 +54,14 @@ public class UserController {
         User createdUser = userService.create(user);
 
         return ResponseEntity.ok(createdUser);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<UpdatedUserDto> update(@RequestBody @Valid UpdateUserDto requestData) {
+        User user = userService.update(requestData);
+
+        return ResponseEntity.ok(new UpdatedUserDto(user));
     }
 
     @DeleteMapping("/{id}")
