@@ -3,9 +3,12 @@ package com.blog.blog.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.blog.dtos.Post.CreatePostDto;
+import com.blog.blog.dtos.Post.UpdatePostDto;
+import com.blog.blog.dtos.Post.UpdatedPostDto;
 import com.blog.blog.entities.Post;
 import com.blog.blog.services.PostService;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -47,6 +51,14 @@ public class PostController {
         Post createdPost = postService.create(post);
 
         return ResponseEntity.ok(createdPost);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<UpdatedPostDto> update(@RequestBody @Valid UpdatePostDto requestData) {
+        Post post = postService.update(requestData);
+
+        return ResponseEntity.ok(new UpdatedPostDto(post));
     }
 
     @DeleteMapping("/{id}")

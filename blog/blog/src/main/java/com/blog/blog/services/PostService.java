@@ -6,8 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.blog.blog.dtos.Post.UpdatePostDto;
+import com.blog.blog.dtos.User.UpdateUserDto;
 import com.blog.blog.entities.Post;
+import com.blog.blog.entities.User;
 import com.blog.blog.repositories.PostRepository;
+
+import jakarta.validation.Valid;
 
 @Service
 public class PostService {
@@ -29,6 +34,20 @@ public class PostService {
         Post createdUser = postRepository.save(postData);
 
         return createdUser;
+    }
+
+    public Post update(@Valid UpdatePostDto updateData) {
+        Post post = postRepository.getReferenceById(updateData.id());
+
+        if (updateData.title() != null) {
+            post.setTitle(updateData.title());
+        }
+
+        if (updateData.body() != null) {
+            post.setBody(updateData.body());
+        }
+
+        return post;
     }
 
     public void delete(Long id) {
