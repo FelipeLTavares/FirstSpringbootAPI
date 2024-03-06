@@ -1,6 +1,5 @@
 package com.blog.blog.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blog.blog.dtos.Post.UpdatePostDto;
-import com.blog.blog.dtos.User.UpdateUserDto;
 import com.blog.blog.entities.Post;
-import com.blog.blog.entities.User;
 import com.blog.blog.repositories.PostRepository;
 
 import jakarta.validation.Valid;

@@ -1,6 +1,7 @@
 package com.blog.blog.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.blog.blog.dtos.User.CreateUSerDto;
 import com.blog.blog.dtos.User.UpdateUserDto;
@@ -11,7 +12,6 @@ import com.blog.blog.services.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +52,14 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<User> create(@Valid @RequestBody CreateUSerDto requestData) {
+    public ResponseEntity<User> create(@Valid @RequestBody CreateUSerDto requestData, UriComponentsBuilder uriBuilder) {
         User user = new User(requestData);
 
         User createdUser = userService.create(user);
 
-        return ResponseEntity.ok(createdUser);
+        var uri = uriBuilder.path("/user/{id}").buildAndExpand(createdUser.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(createdUser);
     }
 
     @PutMapping

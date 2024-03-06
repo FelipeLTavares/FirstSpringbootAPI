@@ -1,6 +1,7 @@
 package com.blog.blog.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.blog.blog.dtos.Post.CreatePostDto;
 import com.blog.blog.dtos.Post.UpdatePostDto;
@@ -42,18 +43,21 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Post>> findAll(@RequestParam Optional<String> title, @PageableDefault(size = 1, page = 0) Pageable pageable) {
+    public ResponseEntity<Page<Post>> findAll(@RequestParam Optional<String> title,
+            @PageableDefault(size = 1, page = 0) Pageable pageable) {
         return ResponseEntity.ok(postService.findAll(title, pageable));
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Post> create(@Valid @RequestBody CreatePostDto requestData) {
+    public ResponseEntity<Post> create(@Valid @RequestBody CreatePostDto requestData, UriComponentsBuilder uriBuilder) {
         Post post = new Post(requestData);
 
         Post createdPost = postService.create(post);
 
-        return ResponseEntity.ok(createdPost);
+        var uri = uriBuilder.path("/posts/{id}").buildAndExpand(createdPost).toUri();
+
+        return ResponseEntity.created(uri).body(createdPost);
     }
 
     @PutMapping
