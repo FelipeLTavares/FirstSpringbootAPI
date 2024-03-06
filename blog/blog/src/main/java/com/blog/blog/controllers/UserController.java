@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,8 +37,8 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> allUsers = userService.findAll();
+    public ResponseEntity<Page<User>> findAll(@PageableDefault(size = 1, page = 0) Pageable pageable) {
+        Page<User> allUsers = userService.findAll(pageable);
 
         return ResponseEntity.ok(allUsers);
     }
@@ -48,6 +51,7 @@ public class UserController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<User> create(@Valid @RequestBody CreateUSerDto requestData) {
         User user = new User(requestData);
 
@@ -65,6 +69,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id) {
         userService.delete(id);
 

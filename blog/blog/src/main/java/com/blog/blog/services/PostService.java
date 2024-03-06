@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blog.blog.dtos.Post.UpdatePostDto;
@@ -24,10 +26,10 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public List<Post> findAll(Optional<String> title) {
+    public Page<Post> findAll(Optional<String> title, Pageable pageable) {
         String titleToSearch = title.orElse("");
 
-        return postRepository.findByTitleContainingIgnoreCase(titleToSearch);
+        return postRepository.findByTitleContainingIgnoreCase(titleToSearch, pageable);
     }
 
     public Post create(Post postData) {

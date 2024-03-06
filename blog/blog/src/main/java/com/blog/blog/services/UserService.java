@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blog.blog.dtos.User.UpdateUserDto;
@@ -18,8 +20,8 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<User> findAll() {
-        List<User> allUsers = userRepository.findAll();
+    public Page<User> findAll(Pageable pageable) {
+        Page<User> allUsers = userRepository.findAll(pageable);
 
         return allUsers;
     }
