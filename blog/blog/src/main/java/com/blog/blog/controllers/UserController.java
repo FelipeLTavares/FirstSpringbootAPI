@@ -12,8 +12,6 @@ import com.blog.blog.services.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
